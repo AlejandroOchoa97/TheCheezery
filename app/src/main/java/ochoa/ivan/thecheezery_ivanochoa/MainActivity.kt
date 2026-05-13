@@ -1,4 +1,4 @@
-package ochoa.ivan.thecheezery_ivanochoa
+﻿package ochoa.ivan.thecheezery_ivanochoa
 
 import android.net.Uri
 import android.os.Bundle
@@ -17,9 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import ochoa.ivan.thecheezery_ivanochoa.data.CombosDAO
-import ochoa.ivan.thecheezery_ivanochoa.data.DatabaseHelper
-import ochoa.ivan.thecheezery_ivanochoa.data.ProductDAO
+import ochoa.ivan.thecheezery_ivanochoa.data.database.AppDatabase
+import ochoa.ivan.thecheezery_ivanochoa.data.repository.CheezeryRepository
 import ochoa.ivan.thecheezery_ivanochoa.screen.AddComboScreen
 import ochoa.ivan.thecheezery_ivanochoa.screen.AddProductScreen
 import ochoa.ivan.thecheezery_ivanochoa.screen.MenuScreen
@@ -45,10 +44,9 @@ fun TheCheezeryApp() {
     val navController = rememberNavController()
     val context = LocalContext.current.applicationContext
     val viewModel = remember {
-        val databaseHelper = DatabaseHelper(context)
+        val database = AppDatabase.getInstance(context)
         ProductsViewModel(
-            productDAO = ProductDAO(databaseHelper),
-            combosDAO = CombosDAO(databaseHelper),
+            repository = CheezeryRepository(database),
             contextLocal = context
         )
     }
